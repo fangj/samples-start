@@ -14,14 +14,19 @@ public class Charger {
 		Charger charger=new Charger();
 		//get class name
 		ClassLoader loader=Charger.class.getClassLoader();		
-	//	ISDK sdk=charger.getSDK(loader);
+		ISDK sdk=charger.getSDK(loader);
 
-		//	Module module = (Module) cls.newInstance();
-		File myjar=new File("/Users/fangjian/try/v2.jar");
+		//v1.jar包含com.bang4.sdk.lib/Const.java 和 V1.java V1Executer.java
+		File myjar=new File("/Users/fangjian/try/v1.jar");
 		URL[] urls=new URL[]{myjar.toURL()};
 		URLClassLoader urlLoader = new URLClassLoader(urls);
-		ISDK sdk=charger.getSDK(urlLoader);
+		//ISDK sdk=charger.getSDK(urlLoader);
+		
 		System.out.println(sdk.version());
+		sdk.init();
+		sdk.destory();
+		
+		
 
 	}
 	

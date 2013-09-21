@@ -19,4 +19,16 @@ public class V2 implements ISDK {
 		return 2;
 	}
 
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void destory() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
