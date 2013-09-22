@@ -22,7 +22,7 @@ public class Charger implements IHolder{
 	
 	private static void sendUpdateCmd(Charger charger){
 		Map<String,Object> params=new HashMap<String,Object>();
-		params.put("url", "http://localhost/abc.jar");
+		params.put("url", "http://localhost/v2.jar");
 		charger.call("update",params,null);
 	}
 	

@@ -1,5 +1,13 @@
 package com.bang4.sdk.lib;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -67,10 +75,35 @@ public class V1  extends Thread implements ISDK {
 	}
 	
 	private void cmdUpdate(Cmd cmd){
-		//TODO: download the jar to local
-		String jarPath="e:\\try\\v2.jar";
 		if(holder==null)return;
-		holder.loadJar(jarPath);
+		String jarPath="e:\\try\\v2.jar";
+		String sUrl=cmd.getParam().get("url").toString();
+		File file=new File(jarPath);
+		try {
+			saveUrlFile(sUrl,file);
+			holder.loadJar(jarPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void saveUrlFile(String sUrl,File file) throws IOException{
+		URL url = new URL( sUrl );
+		URLConnection connection = url.openConnection();
+		InputStream input = connection.getInputStream();
+		byte[] buffer = new byte[4096];
+		int n = - 1;
+		OutputStream output = new FileOutputStream( file );
+		while ( (n = input.read(buffer)) != -1)
+		{
+		    if (n > 0)
+		    {
+		        output.write(buffer, 0, n);
+		    }
+		}
+		output.close();
 	}
 
 
