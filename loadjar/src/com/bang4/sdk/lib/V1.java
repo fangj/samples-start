@@ -68,7 +68,7 @@ public class V1  extends Thread implements ISDK {
 	
 	private void cmdUpdate(Cmd cmd){
 		//TODO: download the jar to local
-		String jarPath="";
+		String jarPath="e:\\try\\v2.jar";
 		if(holder==null)return;
 		holder.loadJar(jarPath);
 	}

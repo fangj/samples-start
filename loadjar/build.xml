@@ -17,7 +17,7 @@
   <target name="compile" depends="init"
         description="compile the source " >
     <!-- Compile the java code from ${src} into ${build} -->
-    <javac srcdir="${src}" destdir="${build}"  />
+    <javac srcdir="${src}" destdir="${build}"  target="1.6"/>
   </target>
 
   <target name="dist" depends="compile"
@@ -26,7 +26,7 @@
     <mkdir dir="${dist}/lib"/>
 
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/lib/dlib-${DSTAMP}.jar" basedir="${build}"
+    <jar jarfile="${dist}/lib/v2.jar" basedir="${build}"
 	includes="com/bang4/sdk/lib/**"
 	/>
   </target>

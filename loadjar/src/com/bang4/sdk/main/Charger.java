@@ -15,21 +15,8 @@ import com.bang4.sdk.i.ISDK;
 public class Charger implements IHolder{
 	private ISDK sdk=null;
 	public  static void main(String args[]) throws ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InstantiationException, MalformedURLException, InterruptedException{
-		System.out.println("hello");
 		Charger charger=new Charger();
-
-/*
-		//v1.jar=com.bang4.sdk.lib/Const.java+V1.java V1Executer.java
-		File myjar=new File("/Users/fangjian/try/v1.jar");
-		URL[] urls=new URL[]{myjar.toURL()};
-		URLClassLoader urlLoader = new URLClassLoader(urls);
-		//ISDK sdk=charger.getSDK(urlLoader);
-*/		
-		System.out.println(charger.version());
 		sendUpdateCmd(charger);
-
-		
-		//sdk.destory();
 		Thread.sleep(5000);
 	}
 	
@@ -41,8 +28,9 @@ public class Charger implements IHolder{
 	
 	public Charger() throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException, InstantiationException{
 		ClassLoader loader=Charger.class.getClassLoader();		
-		sdk=this.getSDK(loader);
+		sdk=this.getSDK(loader,"com.bang4.sdk.lib.V1");
 		sdk.init(this);
+		System.out.println(sdk.version());
 	}
 	
 	public void call(String cmd, Map<String, Object> param, ICallback callback){
@@ -50,21 +38,60 @@ public class Charger implements IHolder{
 	}
 	
 	private ISDK getSDK(ClassLoader loader) throws ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InstantiationException{
+		
 		Class<?> clsConst = loader.loadClass("com.bang4.sdk.lib.Const");
 		Field fcn=clsConst.getField("classname");
 		String classname=(String) fcn.get(clsConst);
 		System.out.println(classname);
+		return getSDK(loader,classname);		
+	}
+	
+	private ISDK getSDK(ClassLoader loader,String className) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 		//get class
-		Class<?> clsSDK = loader.loadClass(classname);
+		Class<?> clsSDK = loader.loadClass(className);
 		ISDK sdk=(ISDK)clsSDK.newInstance();
 		return sdk;
 	}
 
 	@Override
 	public void loadJar(String jarPath) {
-		// TODO Auto-generated method stub
 		System.out.println("load jar");
-		sdk.destory();
+		File myjar=new File(jarPath);
+		System.out.println(myjar.exists());
+		URL[] urls;
+		try {
+			urls = new URL[]{myjar.toURL()};
+			URLClassLoader urlLoader = new URLClassLoader(urls);
+			Class<?> clsConst = urlLoader.loadClass("com.bang4.sdk.lib.Const");
+			//destroy old jar
+			sdk.destory();
+			//load new jar
+			sdk=getSDK(urlLoader);
+			System.out.println(version());
+			sdk.init(this);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	public Integer version(){
