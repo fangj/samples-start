@@ -5,6 +5,6 @@ import java.util.Map;
 public interface ISDK {
 	public void call(String cmd,Map<String,Object>param,ICallback callback);
 	public int version();
-	public void init();
+	public void init(IHolder holder);
 	public void destory();
 }

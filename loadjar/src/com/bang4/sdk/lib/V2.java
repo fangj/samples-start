@@ -3,6 +3,7 @@ package com.bang4.sdk.lib;
 import java.util.Map;
 
 import com.bang4.sdk.i.ICallback;
+import com.bang4.sdk.i.IHolder;
 import com.bang4.sdk.i.ISDK;
 
 public class V2 implements ISDK {
@@ -20,7 +21,7 @@ public class V2 implements ISDK {
 	}
 
 	@Override
-	public void init() {
+	public void init(IHolder holder) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -30,5 +31,6 @@ public class V2 implements ISDK {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }
